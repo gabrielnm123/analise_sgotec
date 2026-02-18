@@ -1,3 +1,4 @@
 glpi.csv
 .env
 erros_sistema.log
+__pycache__
