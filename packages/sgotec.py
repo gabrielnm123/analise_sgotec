@@ -4,17 +4,18 @@ import logging
 from playwright.sync_api import sync_playwright
 
 def sgotec():
+    
+    load_dotenv()
+
     # Configuração de Log: Salva erros críticos com data e hora
     logging.basicConfig(
-        filename='erros_sistema.log',
+        filename='erros_sgotec.log',
         filemode='a', # 'a' adiciona ao final do arquivo sem apagar o histórico
         level=logging.ERROR,
         format='%(asctime)s - %(levelname)s - %(message)s',
         datefmt='%d/%m/%Y %H:%M:%S',
         force=True
     )
-
-    load_dotenv()
 
     try:
         browser = None
@@ -62,17 +63,8 @@ def sgotec():
             # Agora o download já começou. Vamos pegar o objeto dele.
             download = download_info.value
 
-            pasta_usuario = os.path.expanduser('~')
-            caminho_relativo = os.getenv('CAMINHO_RELATIVO')
-            # Junta a pasta do usuário com o caminho do OneDrive
-            caminho_pasta = os.path.join(pasta_usuario, caminho_relativo)
-            # Cria a pasta (incluindo todas as subpastas) se ela não existir
-            os.makedirs(caminho_pasta, exist_ok=True)
-            # Define o nome final do arquivo
-            caminho_completo = os.path.join(caminho_pasta, 'glpi.csv')
-
             # Salva
-            download.save_as(caminho_completo)
+            download.save_as('glpi.csv')
 
             # Fecha o navegador
             browser.close()

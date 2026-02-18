@@ -1,4 +1,6 @@
-glpi.csv
-.env
-erros_sistema.log
-__pycache__
+**/glpi.csv
+**/.env
+**/erros_sgotec.log
+**/erros_analise.log
+**/__pycache__
+**/venv
