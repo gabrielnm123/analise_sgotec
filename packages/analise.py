@@ -19,7 +19,7 @@ def analise():
         pasta_usuario = os.path.expanduser('~')
         caminho_relativo = os.getenv('CAMINHO_RELATIVO')
         caminho_pasta = os.path.join(pasta_usuario, caminho_relativo)
-        caminho_completo = os.path.join(caminho_pasta, 'glpi.csv')
+        caminho_completo = os.path.join(caminho_pasta, 'glpi.xlsx')
 
         csv = pd.read_csv('./glpi.csv', sep=';', encoding='utf-8-sig')
 
@@ -75,14 +75,7 @@ def analise():
 
         os.makedirs(caminho_pasta, exist_ok=True)
 
-        # Salva o arquivo
-        csv.to_csv(caminho_completo, 
-                index=False,         # Importante: Não salva a coluna de numeração (0, 1, 2...)
-                sep=';',             # Mantém o padrão do Excel brasileiro
-                encoding='utf-8-sig' # Garante que os acentos (ç, ã) funcionem no Excel
-        )
-
-        csv.to_excel(caminho_completo.replace('.csv', '.xlsx'), index=False)
+        csv.to_excel(caminho_completo, index=False)
 
     except Exception as e:
         msg = f'Ocorreu um erro: {e}'
