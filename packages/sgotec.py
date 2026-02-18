@@ -14,17 +14,18 @@ def sgotec():
         force=True
     )
 
-    browser = None
-    page = None
+    load_dotenv()
 
     try:
+        browser = None
+        page = None
         with sync_playwright() as p:
             # Inicia o Playwright
                 
             # Abre o navegador (Chromium)
             # headless=False significa: 'Quero VER o navegador abrindo'
             # slow_mo=1 adiciona 1 segundos de pausa entre ações (bom para ver o que acontece)
-            browser = p.chromium.launch(headless=False,
+            browser = p.chromium.launch(headless=True,
                                         slow_mo=1000
                                         )
             # Cria o Contexto (a configuração da janela)
@@ -61,14 +62,18 @@ def sgotec():
             # Agora o download já começou. Vamos pegar o objeto dele.
             download = download_info.value
 
-            # Salvar com o nome original (ex: export_glpi.csv) na pasta do script
-            download.save_as(download.suggested_filename)
+            pasta_usuario = os.path.expanduser('~')
+            caminho_relativo = os.getenv('CAMINHO_RELATIVO')
+            # Junta a pasta do usuário com o caminho do OneDrive
+            caminho_pasta = os.path.join(pasta_usuario, caminho_relativo)
+            # Cria a pasta (incluindo todas as subpastas) se ela não existir
+            os.makedirs(caminho_pasta, exist_ok=True)
+            # Define o nome final do arquivo
+            caminho_completo = os.path.join(caminho_pasta, 'glpi.csv')
 
-            # OU
+            # Salva
+            download.save_as(caminho_completo)
 
-            # Salvar com um nome específico em uma pasta específica
-            # download.save_as('meus_relatorios/relatorio_final.csv')
-            
             # Fecha o navegador
             browser.close()
             
