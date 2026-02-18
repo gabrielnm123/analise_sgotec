@@ -1,4 +1,5 @@
-from packages.sgotec import sgotec, analise
+from packages.sgotec import sgotec
+from packages.analise import analise
 
 if __name__ == '__main__':
     sgotec()

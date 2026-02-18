@@ -69,9 +69,11 @@ def analise():
             'Aberto'
         )
 
-        csv['ID'] = csv['ID'].str.replace(' ', '').astype('int64')
+        csv['ID'] = csv['ID'].astype(str).str.replace(' ', '').astype('int64')
 
         csv.rename(columns={'ID': 'Chamados'}, inplace=True)
+
+        os.makedirs(caminho_pasta, exist_ok=True)
 
         # Salva o arquivo
         csv.to_csv(caminho_completo, 
